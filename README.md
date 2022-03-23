@@ -1,0 +1,3 @@
+# Trybe Futebol Club
+
+Readme soon...
