@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import * as middlewares from '../middlewares';
-import * as joiSchemas from '../utils/joi.schemas';
+import * as joiSchemas from '../utils/joi';
 import { IMatchesService } from '../interfaces';
 import { matchesFactory } from '../factories';
 
