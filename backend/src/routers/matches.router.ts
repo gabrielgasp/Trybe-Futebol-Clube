@@ -21,14 +21,10 @@ export class MatchesRouter {
   private getAllMatches(): void {
     this.router.get(
       '/',
+      middlewares.parseInProgressQuery,
       async (req: Request, res: Response) => {
-        const { inProgress } = req.query;
-        let inProgBool: boolean | undefined;
-        // look for a way to improve this 👇
-        if (inProgress === 'true') inProgBool = true;
-        if (inProgress === 'false') inProgBool = false;
+        const { code, data } = await matchesService.getAllMatches(req.body.inProgress);
 
-        const { code, data } = await matchesService.getAllMatches(inProgBool);
         return res.status(code).json(data);
       },
     );
