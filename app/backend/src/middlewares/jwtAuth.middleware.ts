@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express';
-import { readFileSync } from 'fs';
 import jwt from 'jsonwebtoken';
 
 export const jwtAuth = (req: Request, res: Response, next: NextFunction) => {
@@ -8,7 +7,7 @@ export const jwtAuth = (req: Request, res: Response, next: NextFunction) => {
   if (!token) return res.status(401).json({ message: 'Token not found' });
 
   try {
-    const SECRET = readFileSync('jwt.evaluation.key', { encoding: 'utf8' });
+    const SECRET = process.env.JWT_SECRET || 'a_really_bad_secret';
 
     const { id, email, role, username } = jwt.verify(token, SECRET) as jwt.JwtPayload;
 
