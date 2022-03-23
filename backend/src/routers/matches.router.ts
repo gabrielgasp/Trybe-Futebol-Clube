@@ -51,13 +51,6 @@ export class MatchesRouter {
       middlewares.jwtAuth,
       middlewares.validateBody(joiSchemas.newMatch),
       async (req: Request, res: Response) => {
-        const { homeTeam, awayTeam } = req.body;
-        // Try to move this validation to Joi
-        if (homeTeam === awayTeam) {
-          return res.status(409)
-            .json({ message: 'It is not possible to create a match with two equal teams' });
-        }
-
         const { code, data } = await matchesService.saveMatch(req.body);
 
         return res.status(code).json(data);

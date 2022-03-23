@@ -1,4 +1,15 @@
-import Joi from 'joi';
+import Joi, { CustomHelpers } from 'joi';
+import { INewMatch } from '../../interfaces';
+
+const checkSameTeam = (value: INewMatch, helpers: CustomHelpers) => {
+  const { homeTeam, awayTeam } = value;
+  if (homeTeam === awayTeam) {
+    return helpers.message({
+      custom: '409|It is not possible to create a match when both teams are the same',
+    });
+  }
+  return value;
+};
 
 export const newMatch = Joi.object({
   homeTeam: Joi.number().positive().required().messages({
@@ -27,4 +38,4 @@ export const newMatch = Joi.object({
     'any.required': '400|In Progress must be provided as true',
     'any.only': '422|In Progress must be provided as true',
   }),
-});
+}).custom(checkSameTeam);

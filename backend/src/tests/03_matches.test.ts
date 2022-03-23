@@ -352,7 +352,7 @@ describe('Matches endpoints', () => {
       const { message } = chaiHttpResponse.body;
 
       expect(chaiHttpResponse.status).to.be.equal(409);
-      expect(message).to.be.equal('It is not possible to create a match with two equal teams');
+      expect(message).to.be.equal('It is not possible to create a match when both teams are the same');
     });
 
     it('team does not exist in database: API responds with status 422 and correct message', async () => {
