@@ -1,6 +1,0 @@
-{
-  "scripts": {
-    "start": "docker-compose -p trybe_futebol_clube up -d --build",
-    "stop": "docker-compose -p trybe_futebol_clube down --remove-orphans"
-  }
-}
