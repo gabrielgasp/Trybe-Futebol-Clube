@@ -11,6 +11,7 @@ services:
       test: ["CMD", "lsof", "-t", "-i:80"]
       timeout: 10s
       retries: 5
+      start_period: 5s
     ports:
       - "3000:80"
 
@@ -31,6 +32,7 @@ services:
       test: ["CMD", "lsof", "-t", "-i:3001"]
       timeout: 10s
       retries: 5
+      start_period: 15s
     ports:
       - "3001:3001"
 
@@ -47,5 +49,6 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
       timeout: 10s
       retries: 5
+      start_period: 30s
     cap_add:
       - SYS_NICE
