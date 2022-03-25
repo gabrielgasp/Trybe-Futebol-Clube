@@ -2,7 +2,7 @@ version: '3.9'
 services:
 
   frontend:
-    build: ./frontend
+    image: tfc_frontend
     container_name: tfc_frontend
     depends_on:
       backend:
@@ -16,7 +16,7 @@ services:
       - "3000:80"
 
   backend:
-    build: ./backend
+    image: tfc_backend
     container_name: tfc_backend
     depends_on:
       db:
