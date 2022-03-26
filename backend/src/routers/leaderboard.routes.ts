@@ -1,8 +1,8 @@
 import { Router, Request, Response } from 'express';
-import { leaderboardFactory } from '../factories';
+import { Factory } from '../factory';
 import { LeaderboardService } from '../services';
 
-const leaderboardService = leaderboardFactory();
+const leaderboardService = Factory.createLeaderboard();
 
 export class LeaderboardRouter {
   public router: Router;

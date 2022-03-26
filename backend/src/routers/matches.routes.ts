@@ -2,9 +2,9 @@ import { Request, Response, Router } from 'express';
 import * as middlewares from '../middlewares';
 import * as joiSchemas from '../utils/joi';
 import { IMatchesService } from '../interfaces';
-import { matchesFactory } from '../factories';
+import { Factory } from '../factory';
 
-const matchesService: IMatchesService = matchesFactory();
+const matchesService: IMatchesService = Factory.createMatches();
 
 export class MatchesRouter {
   public router: Router;

@@ -1,8 +1,8 @@
 import { Request, Response, Router } from 'express';
+import { Factory } from '../factory';
 import { IClubsService } from '../interfaces';
-import { clubsFactory } from '../factories';
 
-const clubsService: IClubsService = clubsFactory();
+const clubsService: IClubsService = Factory.createClubs();
 
 export class ClubsRouter {
   public router: Router;

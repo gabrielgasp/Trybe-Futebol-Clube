@@ -1,10 +1,10 @@
 import { Router, Request, Response } from 'express';
-import { loginFactory } from '../factories';
+import { Factory } from '../factory';
 import { ILoginService } from '../interfaces';
 import * as middlewares from '../middlewares';
 import * as joiSchemas from '../utils/joi';
 
-const loginService: ILoginService = loginFactory();
+const loginService: ILoginService = Factory.createLogin();
 
 export class LoginRouter {
   public router: Router;
