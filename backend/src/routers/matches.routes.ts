@@ -1,16 +1,13 @@
 import { Request, Response, Router } from 'express';
-import * as middlewares from '../middlewares';
-import * as joiSchemas from '../utils/joi';
-import { IMatchesService } from '../interfaces';
-import { matchesFactory } from '../factories';
-
-const matchesService: IMatchesService = matchesFactory();
+import { IMatchesService, IJoiSchemas, IMiddlewares } from '../interfaces';
 
 export class MatchesRouter {
-  public router: Router;
-
-  constructor() {
-    this.router = Router();
+  constructor(
+    public router: Router,
+    private matchesService: IMatchesService,
+    private joiSchemas: IJoiSchemas,
+    private middlewares: IMiddlewares,
+  ) {
     this.getAllMatches();
     this.getMatchById();
     this.saveMatchInProgress();
@@ -21,9 +18,9 @@ export class MatchesRouter {
   private getAllMatches(): void {
     this.router.get(
       '/',
-      middlewares.parseInProgressQuery,
+      this.middlewares.parseInProgressQuery,
       async (req: Request, res: Response) => {
-        const { code, data } = await matchesService.getAllMatches(req.body.inProgress);
+        const { code, data } = await this.matchesService.getAllMatches(req.body.inProgress);
 
         return res.status(code).json(data);
       },
@@ -34,7 +31,7 @@ export class MatchesRouter {
     this.router.get(
       '/:id',
       async (req: Request, res: Response) => {
-        const { code, data } = await matchesService.getMatchById(req.params.id);
+        const { code, data } = await this.matchesService.getMatchById(req.params.id);
 
         return res.status(code).json(data);
       },
@@ -44,10 +41,10 @@ export class MatchesRouter {
   private saveMatchInProgress(): void {
     this.router.post(
       '/',
-      middlewares.jwtAuth,
-      middlewares.validateBody(joiSchemas.newMatch),
+      this.middlewares.jwtAuth,
+      this.middlewares.validateBody(this.joiSchemas.newMatch),
       async (req: Request, res: Response) => {
-        const { code, data } = await matchesService.saveMatch(req.body);
+        const { code, data } = await this.matchesService.saveMatch(req.body);
 
         return res.status(code).json(data);
       },
@@ -58,7 +55,7 @@ export class MatchesRouter {
     this.router.patch(
       '/:id/finish',
       async (req: Request, res: Response) => {
-        const { code, data } = await matchesService.finishMatch(req.params.id);
+        const { code, data } = await this.matchesService.finishMatch(req.params.id);
 
         return res.status(code).json(data);
       },
@@ -69,7 +66,7 @@ export class MatchesRouter {
     this.router.patch(
       '/:id',
       async (req: Request, res: Response) => {
-        const { code, data } = await matchesService.updateScore(req.params.id, req.body);
+        const { code, data } = await this.matchesService.updateScore(req.params.id, req.body);
 
         return res.status(code).json(data);
       },

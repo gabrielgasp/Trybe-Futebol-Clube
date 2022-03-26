@@ -1,16 +1,11 @@
 import { Router, Request, Response } from 'express';
-import { leaderboardFactory } from '../factories';
-import { LeaderboardService } from '../services';
-
-const leaderboardService = leaderboardFactory();
+import { ILeaderboardService } from '../interfaces';
 
 export class LeaderboardRouter {
-  public router: Router;
-
-  private LeaderboardService: LeaderboardService;
-
-  constructor() {
-    this.router = Router();
+  constructor(
+    public router: Router,
+    private leaderboardService: ILeaderboardService,
+  ) {
     this.getHomeRanking();
     this.getAwayRanking();
     this.getOverallRanking();
@@ -20,7 +15,7 @@ export class LeaderboardRouter {
     this.router.get(
       '/home',
       async (_req: Request, res: Response) => {
-        const { code, data } = await leaderboardService.getHomeRanking();
+        const { code, data } = await this.leaderboardService.getHomeRanking();
         return res.status(code).json(data);
       },
     );
@@ -30,7 +25,7 @@ export class LeaderboardRouter {
     this.router.get(
       '/away',
       async (_req: Request, res: Response) => {
-        const { code, data } = await leaderboardService.getAwayRanking();
+        const { code, data } = await this.leaderboardService.getAwayRanking();
         return res.status(code).json(data);
       },
     );
@@ -40,7 +35,7 @@ export class LeaderboardRouter {
     this.router.get(
       '/',
       async (_req: Request, res: Response) => {
-        const { code, data } = await leaderboardService.getOverallRanking();
+        const { code, data } = await this.leaderboardService.getOverallRanking();
         return res.status(code).json(data);
       },
     );
