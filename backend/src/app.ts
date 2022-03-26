@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express, { Express } from 'express';
 import 'express-async-errors';
 import { errorHandler } from './middlewares';
