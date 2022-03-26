@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import express, { Express } from 'express';
 import 'express-async-errors';
+import { Factory } from './factory';
 import { errorHandler } from './middlewares';
-import { LoginRouter, ClubsRouter, MatchesRouter, LeaderboardRouter } from './routers';
 
 class App {
   public app: Express;
@@ -27,10 +27,10 @@ class App {
   }
 
   private routes(): void {
-    this.app.use('/login', new LoginRouter().router);
-    this.app.use('/clubs', new ClubsRouter().router);
-    this.app.use('/matches', new MatchesRouter().router);
-    this.app.use('/leaderboard', new LeaderboardRouter().router);
+    this.app.use('/login', Factory.createLogin().router);
+    this.app.use('/clubs', Factory.createClubs().router);
+    this.app.use('/matches', Factory.createMatches().router);
+    this.app.use('/leaderboard', Factory.createLeaderboard().router);
   }
 
   private errorHandler(): void {

@@ -1,14 +1,11 @@
 import { Request, Response, Router } from 'express';
-import { Factory } from '../factory';
 import { IClubsService } from '../interfaces';
 
-const clubsService: IClubsService = Factory.createClubs();
-
 export class ClubsRouter {
-  public router: Router;
-
-  constructor() {
-    this.router = Router();
+  constructor(
+    public router: Router,
+    private clubsService: IClubsService,
+  ) {
     this.getAllClubs();
     this.getClubById();
   }
@@ -17,7 +14,7 @@ export class ClubsRouter {
     this.router.get(
       '/',
       async (req: Request, res: Response) => {
-        const { code, data } = await clubsService.getAllClubs();
+        const { code, data } = await this.clubsService.getAllClubs();
         return res.status(code).json(data);
       },
     );
@@ -27,7 +24,7 @@ export class ClubsRouter {
     this.router.get(
       '/:id',
       async (req: Request, res: Response) => {
-        const { code, data } = await clubsService.getClubById(req.params.id);
+        const { code, data } = await this.clubsService.getClubById(req.params.id);
         return res.status(code).json(data);
       },
     );

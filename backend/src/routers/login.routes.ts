@@ -1,16 +1,13 @@
 import { Router, Request, Response } from 'express';
-import { Factory } from '../factory';
-import { ILoginService } from '../interfaces';
-import * as middlewares from '../middlewares';
-import * as joiSchemas from '../utils/joi';
-
-const loginService: ILoginService = Factory.createLogin();
+import { ILoginService, IJoiSchemas, IMiddlewares } from '../interfaces';
 
 export class LoginRouter {
-  public router: Router;
-
-  constructor() {
-    this.router = Router();
+  constructor(
+    public router: Router,
+    private loginService: ILoginService,
+    private joiSchemas: IJoiSchemas,
+    private middlewares: IMiddlewares,
+  ) {
     this.login();
     this.validateLogin();
   }
@@ -18,9 +15,9 @@ export class LoginRouter {
   private login(): void {
     this.router.post(
       '/',
-      middlewares.validateBody(joiSchemas.login),
+      this.middlewares.validateBody(this.joiSchemas.login),
       async (req: Request, res: Response) => {
-        const { code, data } = await loginService.login(req.body);
+        const { code, data } = await this.loginService.login(req.body);
         return res.status(code).json(data);
       },
     );
@@ -29,7 +26,7 @@ export class LoginRouter {
   private validateLogin(): void {
     this.router.get(
       '/validate',
-      middlewares.jwtAuth,
+      this.middlewares.jwtAuth,
       async (req: Request, res: Response) => res.status(200).send(req.tokenData!.role),
     );
   }
