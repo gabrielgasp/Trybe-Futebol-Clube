@@ -20,7 +20,9 @@ Achou que era só isso? Sabe de nada, inocente! Já dizia o ditado, "aplicação
 
 A aplicação pode ser acessada [aqui](http://ec2-54-233-176-138.sa-east-1.compute.amazonaws.com:3000).
 
-Ps: Para realizar o login na aplicação basta usar as seguintes credenciais:
+Ps: Caso seu navegador tente acessar a página através do protocolo HTTPS e acuse erro, será necessário alterar manualmente a URL para o protocolo HTTP.
+
+Ps2: Para realizar o login na aplicação basta usar as seguintes credenciais:
 
     login: admin@admin.com
     senha: secret_admin 
