@@ -20,6 +20,8 @@ Achou que era só isso? Sabe de nada, inocente! Já dizia o ditado, "aplicação
 
 A aplicação pode ser acessada [aqui](http://ec2-54-233-176-138.sa-east-1.compute.amazonaws.com:3000/leaderboard).
 
+A API pode ser acessada pela porta `3001`, e a documentação com todos os endpoints pode ser acessada pela rota [`/docs`](http://ec2-54-233-176-138.sa-east-1.compute.amazonaws.com:3001/docs/)
+
 Ps: Caso seu navegador tente acessar a página através do protocolo HTTPS e acuse erro, será necessário alterar manualmente a URL para o protocolo HTTP.
 
 Ps2: Para realizar o login na aplicação basta usar as seguintes credenciais:
@@ -38,13 +40,13 @@ Ps2: Para realizar o login na aplicação basta usar as seguintes credenciais:
 - Docker
 - Mocha + Chai + Sinon
 - AWS
+- Swagger
 
 #### Além das Stacks citadas acima, também foram utilizadas as seguintes bibliotecas:
 
 - `Joi` para fazer a validação do corpo das requisições;
 - `JWT` para fazer a autenticação dos usuários logados;
 - `bcrypt` para fazer hashing e verificação das senhas armazenadas no banco de dados.
-
 
 ## Rodando localmente
 
@@ -82,7 +84,6 @@ Para encerrar a API basta executar o comando
 ```bash
   docker-compose down
 ```
-
 
 ## Experiência
 
