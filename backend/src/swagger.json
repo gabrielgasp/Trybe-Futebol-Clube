@@ -1,0 +1,882 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Trybe Futebol Clube",
+    "description": "API Rest desenvolvida em Node que permite cadastrar e atualizar partidas além de ranquear clubes baseado desempenho dos mesmos durante as partidas cadastradas",
+    "contact": {
+      "email": "gabrielgaspar447@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://ec2-54-233-176-138.sa-east-1.compute.amazonaws.com:3001/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "login",
+      "description": "Autenticação de usuário"
+    },
+    {
+      "name": "clubs",
+      "description": "Endpoints relacionados aos clubes"
+    },
+    {
+      "name": "matches",
+      "description": "Endpoints relacionados as partidas"
+    },
+    {
+      "name": "leaderboard",
+      "description": "Endpoints relacionados a classificação dos clubes"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Realiza a autenticação através de email e senha",
+        "operationId": "login",
+        "requestBody": {
+          "description": "Credenciais de usuário",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Login realizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Alguma das credenciais não foi fornecida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "All fields must be filled"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Alguma das credenciais fornecidas não é string",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Email não é string": {
+                    "value": {
+                      "message": "Email must be a string"
+                    }
+                  },
+                  "Password não é string": {
+                    "value": {
+                      "message": "Password must be a string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/login/validate": {
+      "get": {
+        "tags": [
+          "login"
+        ],
+        "summary": "Realiza a validação do token recebido no login e responde com a role do usuário",
+        "operationId": "login validation",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "token obtido no login",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Token válido",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "example": "admin"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Quando o token é inválido, está expirado ou não é informado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Token não informado": {
+                    "value": {
+                      "message": "Token not found"
+                    }
+                  },
+                  "Token inválido ou expirado": {
+                    "value": {
+                      "message": "Invalid token"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clubs": {
+      "get": {
+        "tags": [
+          "clubs"
+        ],
+        "summary": "Lista todos os clubes cadastrados no banco de dados",
+        "operationId": "list clubs",
+        "responses": {
+          "200": {
+            "description": "Retorna um array o nome e id de todos os clubes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Club"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/clubs/{clubId}": {
+      "get": {
+        "tags": [
+          "clubs"
+        ],
+        "summary": "Busca um clube pelo id informado na rota",
+        "operationId": "get club by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "clubId",
+            "description": "ID do clube que quer buscar",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna o nome do clube",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Club"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Retorna uma mensagem de erro caso o id informado não pertença a nenhum clube",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Club not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/matches": {
+      "post": {
+        "tags": [
+          "matches"
+        ],
+        "summary": "Cadastra uma partida em andamento",
+        "operationId": "save match",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "authorization",
+            "description": "token obtido no login",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Informações da partida",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "homeTeam": {
+                    "type": "integer",
+                    "example": 16
+                  },
+                  "homeTeamGoals": {
+                    "type": "integer",
+                    "example": 2
+                  },
+                  "awayTeam": {
+                    "type": "integer",
+                    "example": 8
+                  },
+                  "awayTeamGoals": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "inProgress": {
+                    "type": "boolean",
+                    "enum": [
+                      true
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Retorna as informações da partida cadastrada e o id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 49
+                    },
+                    "homeTeam": {
+                      "type": "integer",
+                      "example": 16
+                    },
+                    "homeTeamGoals": {
+                      "type": "integer",
+                      "example": 2
+                    },
+                    "awayTeam": {
+                      "type": "integer",
+                      "example": 8
+                    },
+                    "awayTeamGoals": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "inProgress": {
+                      "type": "boolean",
+                      "enum": [
+                        true
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Quando o token é inválido, está expirado ou não é informado",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "Token não informado": {
+                    "value": {
+                      "message": "Token not found"
+                    }
+                  },
+                  "Token inválido ou expirado": {
+                    "value": {
+                      "message": "Invalid token"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Retorna mensagem de erro ao tentar cadastrar partida com time que não existe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "There is no team with suck id!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "matches"
+        ],
+        "summary": "Lista todas as partidas, podendo filtrar pelo estado (em andamento ou finalizadas) através de uma query",
+        "operationId": "list matches",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "inProgress",
+            "description": "Filtro de estado da partida",
+            "style": "form",
+            "schema": {
+              "type": "string",
+              "enum": [
+                true,
+                false
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna um array com as informações das partidas",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "inProgress não informado": {
+                    "value": [
+                      {
+                        "id": 1,
+                        "homeTeam": 16,
+                        "homeTeamGoals": 1,
+                        "awayTeam": 8,
+                        "awayTeamGoals": 1,
+                        "inProgress": false,
+                        "homeClub": {
+                          "clubName": "São Paulo"
+                        },
+                        "awayClub": {
+                          "clubName": "Grêmio"
+                        }
+                      },
+                      {
+                        "id": 41,
+                        "homeTeam": 16,
+                        "homeTeamGoals": 2,
+                        "awayTeam": 9,
+                        "awayTeamGoals": 0,
+                        "inProgress": true,
+                        "homeClub": {
+                          "clubName": "São Paulo"
+                        },
+                        "awayClub": {
+                          "clubName": "Internacional"
+                        }
+                      }
+                    ]
+                  },
+                  "inProgress true": {
+                    "value": [
+                      {
+                        "id": 41,
+                        "homeTeam": 16,
+                        "homeTeamGoals": 2,
+                        "awayTeam": 9,
+                        "awayTeamGoals": 0,
+                        "inProgress": true,
+                        "homeClub": {
+                          "clubName": "São Paulo"
+                        },
+                        "awayClub": {
+                          "clubName": "Internacional"
+                        }
+                      },
+                      {
+                        "id": 42,
+                        "homeTeam": 6,
+                        "homeTeamGoals": 1,
+                        "awayTeam": 1,
+                        "awayTeamGoals": 0,
+                        "inProgress": true,
+                        "homeClub": {
+                          "clubName": "Ferroviária"
+                        },
+                        "awayClub": {
+                          "clubName": "Avaí/Kindermann"
+                        }
+                      }
+                    ]
+                  },
+                  "inProgress false": {
+                    "value": [
+                      {
+                        "id": 1,
+                        "homeTeam": 16,
+                        "homeTeamGoals": 1,
+                        "awayTeam": 8,
+                        "awayTeamGoals": 1,
+                        "inProgress": false,
+                        "homeClub": {
+                          "clubName": "São Paulo"
+                        },
+                        "awayClub": {
+                          "clubName": "Grêmio"
+                        }
+                      },
+                      {
+                        "id": 2,
+                        "homeTeam": 9,
+                        "homeTeamGoals": 1,
+                        "awayTeam": 14,
+                        "awayTeamGoals": 1,
+                        "inProgress": false,
+                        "homeClub": {
+                          "clubName": "Internacional"
+                        },
+                        "awayClub": {
+                          "clubName": "Santos"
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/matches/{matchId}": {
+      "get": {
+        "tags": [
+          "matches"
+        ],
+        "summary": "Busca uma partida pelo id informado na rota",
+        "operationId": "get match by id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "matchId",
+            "description": "ID da partida que quer buscar",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna as informações da partida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "homeTeam": {
+                      "type": "integer",
+                      "example": 16
+                    },
+                    "homeTeamGoals": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "awayTeam": {
+                      "type": "integer",
+                      "example": 8
+                    },
+                    "awayTeamGoals": {
+                      "type": "integer",
+                      "example": 1
+                    },
+                    "inProgress": {
+                      "type": "boolean",
+                      "example": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Retorna mensagem de erro ao tentar buscar uma partida que não existe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Match not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "matches"
+        ],
+        "summary": "Atualiza o placar de uma partida em andamento",
+        "operationId": "update score",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "matchId",
+            "description": "ID da partida que quer atualizar",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 43
+          }
+        ],
+        "requestBody": {
+          "description": "Placar da partida atualizado",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "homeTeamGoals": {
+                    "type": "integer",
+                    "example": 2
+                  },
+                  "awayTeamGoals": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Retorna mensagem confirmando a atualização",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Match score updated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Retorna mensagem de erro ao tentar atualizar o placar de uma partida finalizada ou que não existe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Match already over or does not exist"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/matches/{matchId}/finish": {
+      "patch": {
+        "tags": [
+          "matches"
+        ],
+        "summary": "Finaliza uma partida em andamento",
+        "operationId": "finish match",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "matchId",
+            "description": "ID da partida que quer finalizar",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 43
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retorna mensagem confirmando que a partida foi finalizada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Finished match"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Retorna mensagem de erro ao tentar finalizar uma partida já finalizada ou que não existe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Match already over or does not exist"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/leaderboard": {
+      "get": {
+        "tags": [
+          "leaderboard"
+        ],
+        "summary": "Gera a classificação geral de todos os times cadastrados",
+        "operationId": "get overall leaderboard",
+        "responses": {
+          "200": {
+            "description": "Retorna a classificação ordenada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Leaderboard"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/leaderboard/home": {
+      "get": {
+        "tags": [
+          "leaderboard"
+        ],
+        "summary": "Gera a classificação de todos os times cadastrados em partidas que eram mandantes",
+        "operationId": "get home leaderboard",
+        "responses": {
+          "200": {
+            "description": "Retorna a classificação ordenada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Leaderboard"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/leaderboard/away": {
+      "get": {
+        "tags": [
+          "leaderboard"
+        ],
+        "summary": "Gera a classificação de todos os times cadastrados em partidas que eram visitantes",
+        "operationId": "get away leaderboard",
+        "responses": {
+          "200": {
+            "description": "Retorna a classificação ordenada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Leaderboard"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Login": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "admin@admin.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "secret_admin"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 1
+              },
+              "email": {
+                "type": "string",
+                "example": "admin@admin.com"
+              },
+              "role": {
+                "type": "string",
+                "example": "admin"
+              },
+              "username": {
+                "type": "string",
+                "example": "Admin"
+              }
+            }
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhZG1pbkBhZG1pbi5jb20iLCJyb2xlIjoiYWRtaW4iLCJ1c2VybmFtZSI6IkFkbWluIiwiaWF0IjoxNjQ4NTg2NDUxLCJleHAiOjE2NDg2NzI4NTF9.uIqP5zWXFc333fH77zTByMNrI-7OahcZcOCr2opfhGg"
+          }
+        }
+      },
+      "Club": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "clubName": {
+            "type": "string",
+            "example": "Avaí/Kindermann"
+          }
+        }
+      },
+      "Leaderboard": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "totalGames": {
+              "type": "integer"
+            },
+            "totalPoints": {
+              "type": "integer"
+            },
+            "totalVictories": {
+              "type": "integer"
+            },
+            "totalDraws": {
+              "type": "integer"
+            },
+            "totalLosses": {
+              "type": "integer"
+            },
+            "goalsFavor": {
+              "type": "integer"
+            },
+            "goalsOwn": {
+              "type": "integer"
+            },
+            "goalsBalance": {
+              "type": "integer"
+            },
+            "efficiency": {
+              "type": "integer"
+            }
+          }
+        },
+        "example": [
+          {
+            "name": "Palmeiras",
+            "totalPoints": 5,
+            "totalGames": 13,
+            "totalVictories": 4,
+            "totalDraws": 1,
+            "totalLosses": 0,
+            "goalsFavor": 17,
+            "goalsOwn": 5,
+            "goalsBalance": 12,
+            "efficiency": 86.67
+          },
+          {
+            "name": "Corinthians",
+            "totalPoints": 5,
+            "totalGames": 12,
+            "totalVictories": 4,
+            "totalDraws": 0,
+            "totalLosses": 1,
+            "goalsFavor": 12,
+            "goalsOwn": 3,
+            "goalsBalance": 9,
+            "efficiency": 80
+          }
+        ]
+      }
+    }
+  }
+}
