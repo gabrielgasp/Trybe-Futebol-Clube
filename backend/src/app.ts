@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import express, { Express } from 'express';
 import 'express-async-errors';
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger.json';
 import { Factory } from './factory';
 import { errorHandler } from './middlewares';
 
@@ -27,6 +29,7 @@ class App {
   }
 
   private routes(): void {
+    this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
     this.app.use('/login', Factory.createLogin().router);
     this.app.use('/clubs', Factory.createClubs().router);
     this.app.use('/matches', Factory.createMatches().router);
