@@ -39,7 +39,7 @@ export class MatchesService implements IMatchesService {
     ]);
 
     if (teams.includes(undefined)) {
-      return { code: 401, data: { message: 'There is no team with such id!' } };
+      return { code: 422, data: { message: 'There is no team with such id!' } };
     }
 
     const newMatch = await this.matchesRepository.saveMatch(data);

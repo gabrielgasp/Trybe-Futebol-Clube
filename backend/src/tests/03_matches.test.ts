@@ -364,7 +364,7 @@ describe('Matches endpoints', () => {
   
       const { message } = chaiHttpResponse.body;
 
-      expect(chaiHttpResponse.status).to.be.equal(401);
+      expect(chaiHttpResponse.status).to.be.equal(422);
       expect(message).to.be.equal('There is no team with such id!');
     });
   });
