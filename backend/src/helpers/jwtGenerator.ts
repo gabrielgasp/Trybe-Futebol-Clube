@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { ITokenData } from '../interfaces';
+import { ITokenData } from '../typescript/interfaces';
 
 const jwtConfig = { expiresIn: '1d' };
 

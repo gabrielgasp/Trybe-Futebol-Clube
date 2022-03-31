@@ -1,4 +1,4 @@
-import { IMatchGoals } from './MatchGoals';
+import { IMatchGoals } from './MatchGoals.interface';
 
 export interface IClubHistory {
   clubName: string;

@@ -1,4 +1,10 @@
-import { IMatchesRepository, INewMatch, IScore, IMatch, INewMatchResponse } from '../interfaces';
+import {
+  IMatchesRepository,
+  INewMatch,
+  IScore,
+  IMatch,
+  INewMatchResponse,
+} from '../typescript/interfaces';
 import { MatchModel, ClubModel } from '../database/models';
 
 export class MatchesRepository implements IMatchesRepository {

@@ -1,4 +1,4 @@
-import { IUser, IUsersRepository } from '../interfaces';
+import { IUser, IUsersRepository } from '../typescript/interfaces';
 import { UserModel } from '../database/models';
 
 export class UsersRepository implements IUsersRepository {

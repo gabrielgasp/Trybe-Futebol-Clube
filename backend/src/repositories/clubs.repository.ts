@@ -1,5 +1,5 @@
 import { ClubModel, MatchModel } from '../database/models';
-import { IClubsRepository, IClub, IClubHistory } from '../interfaces';
+import { IClubsRepository, IClub, IClubHistory } from '../typescript/interfaces';
 
 export class ClubsRepository implements IClubsRepository {
   async getAllClubs(): Promise<IClub[]> {

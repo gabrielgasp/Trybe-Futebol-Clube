@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { IClubsService } from '../interfaces';
+import { IClubsService } from '../typescript/interfaces';
 
 export class ClubsRouter {
   constructor(

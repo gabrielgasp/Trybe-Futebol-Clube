@@ -1,5 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { IMatchesService, IJoiSchemas, IMiddlewares } from '../interfaces';
+import { IMatchesService, IJoiSchemas, IMiddlewares } from '../typescript/interfaces';
 
 export class MatchesRouter {
   constructor(

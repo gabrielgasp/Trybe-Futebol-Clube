@@ -5,7 +5,7 @@ import {
   IMatchesRepository,
   IMatch,
   IMatchesService,
-} from '../interfaces';
+} from '../typescript/interfaces';
 
 export class MatchesService implements IMatchesService {
   constructor(

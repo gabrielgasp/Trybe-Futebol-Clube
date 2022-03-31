@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { ILeaderboardService } from '../interfaces';
+import { ILeaderboardService } from '../typescript/interfaces';
 
 export class LeaderboardRouter {
   constructor(

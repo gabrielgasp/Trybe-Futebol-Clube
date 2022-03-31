@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { ILoginService, IJoiSchemas, IMiddlewares } from '../interfaces';
+import { ILoginService, IJoiSchemas, IMiddlewares } from '../typescript/interfaces';
 
 export class LoginRouter {
   constructor(

@@ -1,5 +1,5 @@
 import sortArray from 'sort-array';
-import { IClubHistory, IClubStats, IMatchGoals } from '../interfaces';
+import { IClubHistory, IClubStats, IMatchGoals } from '../typescript/interfaces';
 
 export class ClubStatistics implements IClubStats {
   public name: string;
