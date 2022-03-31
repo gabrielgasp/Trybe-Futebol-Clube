@@ -22,7 +22,7 @@ describe('Error handler middleware', () => {
       .post('/login')
       .send({ email: 'admin@admin.com', password: 'secret_admin' });
 
-    token = chaiHttpResponse.body;
+      token = chaiHttpResponse.body.token;
 
     sinon.stub(console, 'log').returns();
   });
