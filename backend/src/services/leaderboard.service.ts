@@ -1,4 +1,4 @@
-import sortArray from 'sort-array';
+import { TSortArray } from '../adapters';
 import { ClubStatistics } from '../helpers';
 import { ILeaderboardService, IClubsRepository, IClubStats } from '../interfaces';
 
@@ -6,12 +6,13 @@ export class LeaderboardService implements ILeaderboardService {
   constructor(
     private clubsRepository: IClubsRepository,
     private ClubStats: typeof ClubStatistics,
+    private sortArray: TSortArray,
   ) {}
 
   private sortLeaderboard(clubsStats: IClubStats[]) {
     const sortProps = ['totalPoints', 'totalVictories', 'goalsBalance', 'goalsFavor', 'goalsOwn'];
     const sortPropsOrder = ['desc', 'desc', 'desc', 'desc', 'desc'];
-    return sortArray(clubsStats, { by: sortProps, order: sortPropsOrder });
+    return this.sortArray(clubsStats, { by: sortProps, order: sortPropsOrder });
   }
 
   async getHomeRanking() {

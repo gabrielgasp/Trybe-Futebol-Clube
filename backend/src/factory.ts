@@ -1,4 +1,3 @@
-import { compare } from 'bcryptjs';
 import { Router } from 'express';
 import { ClubStatistics, jwtGenerator } from './helpers';
 import { ClubsRepository, MatchesRepository, UsersRepository } from './repositories';
@@ -6,12 +5,13 @@ import { LoginRouter, ClubsRouter, MatchesRouter, LeaderboardRouter } from './ro
 import { ClubsService, LeaderboardService, LoginService, MatchesService } from './services';
 import * as joiSchemas from './utils/joi';
 import * as middlewares from './middlewares';
+import { passwordCompare, sortArray } from './adapters';
 
 export class Factory {
-  static createLogin() { // not sure that I should inject bcrypt's compare function
+  static createLogin() {
     return new LoginRouter(
       Router(),
-      new LoginService(new UsersRepository(), compare, jwtGenerator),
+      new LoginService(new UsersRepository(), passwordCompare, jwtGenerator),
       joiSchemas,
       middlewares,
     );
@@ -36,7 +36,7 @@ export class Factory {
   static createLeaderboard() {
     return new LeaderboardRouter(
       Router(),
-      new LeaderboardService(new ClubsRepository(), ClubStatistics),
+      new LeaderboardService(new ClubsRepository(), ClubStatistics, sortArray),
     );
   }
 }
