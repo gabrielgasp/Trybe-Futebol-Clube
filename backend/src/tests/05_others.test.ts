@@ -45,7 +45,7 @@ describe('Error handler middleware', () => {
       chaiHttpResponse = await chai
         .request(app)
         .get('/login/validate')
-        .set('authorization', token);
+        .set('authorization', `Bearer ${token}`);
   
         const { message } = chaiHttpResponse.body;
   
@@ -68,7 +68,7 @@ describe('Error handler middleware', () => {
       chaiHttpResponse = await chai
       .request(app)
       .get('/login/validate')
-      .set('authorization', token);
+      .set('authorization', `Bearer ${token}`);
 
       const { message } = chaiHttpResponse.body;
 

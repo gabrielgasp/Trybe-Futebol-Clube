@@ -97,7 +97,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(validNewMatch);
 
         const { status, body } = chaiHttpResponse;
@@ -124,6 +124,18 @@ describe('Matches endpoints', () => {
   });
 
   describe('When failing to save a new match with a POST request to /matches because', () => {
+    it('token is not Bearer: API responds with status 401 and correct message', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/matches')
+        .set('authorization', loginToken);
+  
+      const { message } = chaiHttpResponse.body;
+  
+      expect(chaiHttpResponse.status).to.be.equal(401);
+      expect(message).to.be.equal('Invalid token');
+    });
+
     it('token is invalid: API responds with status 401 and correct message', async () => {
       chaiHttpResponse = await chai
         .request(app)
@@ -151,7 +163,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.noHT);
   
       const { message } = chaiHttpResponse.body;
@@ -164,7 +176,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.stringHT);
   
       const { message } = chaiHttpResponse.body;
@@ -177,7 +189,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.negativeHT);
   
       const { message } = chaiHttpResponse.body;
@@ -190,7 +202,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.noAT);
   
       const { message } = chaiHttpResponse.body;
@@ -203,7 +215,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.stringAT);
   
       const { message } = chaiHttpResponse.body;
@@ -216,7 +228,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.negativeAT);
   
       const { message } = chaiHttpResponse.body;
@@ -229,7 +241,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.noHTG);
   
       const { message } = chaiHttpResponse.body;
@@ -242,7 +254,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.stringHTG);
   
       const { message } = chaiHttpResponse.body;
@@ -255,7 +267,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.negativeHTG);
   
       const { message } = chaiHttpResponse.body;
@@ -268,7 +280,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.noATG);
   
       const { message } = chaiHttpResponse.body;
@@ -281,7 +293,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.stringATG);
   
       const { message } = chaiHttpResponse.body;
@@ -294,7 +306,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.negativeATG);
   
       const { message } = chaiHttpResponse.body;
@@ -307,7 +319,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.noIP);
   
       const { message } = chaiHttpResponse.body;
@@ -320,7 +332,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.stringIP);
   
       const { message } = chaiHttpResponse.body;
@@ -333,7 +345,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.falseIP);
   
       const { message } = chaiHttpResponse.body;
@@ -346,7 +358,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.sameTeam);
   
       const { message } = chaiHttpResponse.body;
@@ -359,7 +371,7 @@ describe('Matches endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send(invalidNewMatch.unknownTeam);
   
       const { message } = chaiHttpResponse.body;

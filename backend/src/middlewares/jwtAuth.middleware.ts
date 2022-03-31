@@ -2,9 +2,13 @@ import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
 export const jwtAuth = (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization;
+  const auth = req.headers.authorization;
 
-  if (!token) return res.status(401).json({ message: 'Token not found' });
+  if (!auth) return res.status(401).json({ message: 'Token not found' });
+
+  const [type, token] = auth.split(' ');
+
+  if (type !== 'Bearer') return res.status(401).json({ message: 'Invalid token' });
 
   try {
     const SECRET = process.env.JWT_SECRET || 'a_really_bad_secret';
