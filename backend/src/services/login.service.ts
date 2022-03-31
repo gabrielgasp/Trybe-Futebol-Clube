@@ -1,16 +1,17 @@
+import { TPasswordCompare } from '../adapters';
 import { ICredentials, ITokenData, IUsersRepository, ILoginService } from '../interfaces';
 
 export class LoginService implements ILoginService {
   constructor(
     private usersRepository: IUsersRepository,
-    private compare: (plain: string, hash: string) => Promise<boolean>,
+    private passwordCompare: TPasswordCompare,
     private jwtGenerator: (tokenData: ITokenData) => string,
   ) {}
 
   async login(credentials: ICredentials) {
     const user = await this.usersRepository.getUserByEmail(credentials.email);
 
-    if (!user || !(await this.compare(credentials.password, user.password))) {
+    if (!user || !(await this.passwordCompare(credentials.password, user.password))) {
       return { code: 401, data: { message: 'Incorrect email or password' } };
     }
 
