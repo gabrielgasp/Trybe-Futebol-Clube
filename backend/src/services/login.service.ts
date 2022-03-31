@@ -1,4 +1,4 @@
-import { TPasswordCompare } from '../adapters';
+import { TPasswordCompare } from '../types';
 import { ICredentials, ITokenData, IUsersRepository, ILoginService } from '../interfaces';
 
 export class LoginService implements ILoginService {

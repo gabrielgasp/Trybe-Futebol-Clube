@@ -1,4 +1,4 @@
-import { TSortArray } from '../adapters';
+import { TSortArray } from '../types';
 import { ClubStatistics } from '../helpers';
 import { ILeaderboardService, IClubsRepository, IClubStats } from '../interfaces';
 
