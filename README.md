@@ -79,6 +79,19 @@ A API estará pronta para uso quando a saída no seu terminal ficar assim (pode 
   Creating tfc_frontend ... done
 ```
 
+A aplicação poderá ser acessada através de:
+
+```bash
+  Front-end: localhost:3000
+  Back-end: localhost:3001
+```
+
+Para rodar a bateria de testes basta executar:
+
+```bash
+  cd backend && npm install && npm test 
+```
+
 Para encerrar a API basta executar o comando
 
 ```bash
