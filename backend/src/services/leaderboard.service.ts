@@ -1,6 +1,6 @@
-import { TSortArray } from '../types';
+import { TSortArray } from '../typescript/types';
 import { ClubStatistics } from '../helpers';
-import { ILeaderboardService, IClubsRepository, IClubStats } from '../interfaces';
+import { ILeaderboardService, IClubsRepository, IClubStats } from '../typescript/interfaces';
 
 export class LeaderboardService implements ILeaderboardService {
   constructor(

@@ -1,5 +1,5 @@
 import Joi, { CustomHelpers } from 'joi';
-import { INewMatch } from '../../interfaces';
+import { INewMatch } from '../../typescript/interfaces';
 
 const checkSameTeam = (value: INewMatch, helpers: CustomHelpers) => {
   const { homeTeam, awayTeam } = value;
