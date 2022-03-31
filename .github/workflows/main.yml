@@ -17,3 +17,27 @@ jobs:
     - name: Run ESLint check
       run: npx eslint .
       working-directory: ./backend
+
+  Tests:
+    runs-on: ubuntu-20.04
+    needs: [ESLint]
+    steps:
+    - name: Fetch repository
+      uses: actions/checkout@v2
+
+    - name: Start containers
+      run: docker-compose up --build -d
+
+    - name: Install node
+      uses: actions/setup-node@v1
+
+    - name: Install dependencies
+      run: npm install
+      working-directory: ./backend
+
+    - name: Run ESLint check
+      run: npm test
+      working-directory: ./backend
+
+    - name: Stop containers
+      run: docker-compose down
