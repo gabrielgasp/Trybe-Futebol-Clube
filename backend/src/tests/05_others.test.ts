@@ -22,7 +22,7 @@ describe('Error handler middleware', () => {
       .post('/login')
       .send({ email: 'admin@admin.com', password: 'secret_admin' });
 
-    token = chaiHttpResponse.body;
+      token = chaiHttpResponse.body.token;
 
     sinon.stub(console, 'log').returns();
   });
@@ -45,7 +45,7 @@ describe('Error handler middleware', () => {
       chaiHttpResponse = await chai
         .request(app)
         .get('/login/validate')
-        .set('authorization', token);
+        .set('authorization', `Bearer ${token}`);
   
         const { message } = chaiHttpResponse.body;
   
@@ -68,7 +68,7 @@ describe('Error handler middleware', () => {
       chaiHttpResponse = await chai
       .request(app)
       .get('/login/validate')
-      .set('authorization', token);
+      .set('authorization', `Bearer ${token}`);
 
       const { message } = chaiHttpResponse.body;
 

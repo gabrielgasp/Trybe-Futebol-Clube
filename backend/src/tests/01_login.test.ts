@@ -140,10 +140,22 @@ describe('Login endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .get('/login/validate')
-        .set('authorization', loginToken);
+        .set('authorization', `Bearer ${loginToken}`);
   
       expect(chaiHttpResponse.status).to.be.equal(200);
       expect(chaiHttpResponse.text).to.be.equal('admin');
+    });
+
+    it('Not Bearer: API responds with status 401 and correct message', async () => {
+      chaiHttpResponse = await chai
+        .request(app)
+        .get('/login/validate')
+        .set('authorization', loginToken);
+  
+        const { message } = chaiHttpResponse.body;
+  
+      expect(chaiHttpResponse.status).to.be.equal(401);
+      expect(message).to.be.equal('Invalid token');
     });
   
     it('invalid: API responds with status 401 and correct message', async () => {

@@ -45,7 +45,7 @@ describe('Leaderboard endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send({ homeTeam: 4, awayTeam: 9, homeTeamGoals: 2, awayTeamGoals: 1, inProgress: true });
 
       chaiHttpResponse = await chai
@@ -83,7 +83,7 @@ describe('Leaderboard endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send({ homeTeam: 4, awayTeam: 9, homeTeamGoals: 2, awayTeamGoals: 1, inProgress: true });
 
       chaiHttpResponse = await chai
@@ -121,7 +121,7 @@ describe('Leaderboard endpoints', () => {
       chaiHttpResponse = await chai
         .request(app)
         .post('/matches')
-        .set('authorization', loginToken)
+        .set('authorization', `Bearer ${loginToken}`)
         .send({ homeTeam: 7, awayTeam: 11, homeTeamGoals: 3, awayTeamGoals: 0, inProgress: true });
 
       chaiHttpResponse = await chai

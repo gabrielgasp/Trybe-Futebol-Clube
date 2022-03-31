@@ -106,15 +106,9 @@
         ],
         "summary": "Realiza a validação do token recebido no login e responde com a role do usuário",
         "operationId": "login validation",
-        "parameters": [
+        "security": [
           {
-            "in": "header",
-            "name": "authorization",
-            "description": "token obtido no login",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "bearerAuth": []
           }
         ],
         "responses": {
@@ -130,23 +124,7 @@
             }
           },
           "401": {
-            "description": "Quando o token é inválido, está expirado ou não é informado",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Token não informado": {
-                    "value": {
-                      "message": "Token not found"
-                    }
-                  },
-                  "Token inválido ou expirado": {
-                    "value": {
-                      "message": "Invalid token"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
           }
         }
       }
@@ -231,15 +209,9 @@
         ],
         "summary": "Cadastra uma partida em andamento",
         "operationId": "save match",
-        "parameters": [
+        "security": [
           {
-            "in": "header",
-            "name": "authorization",
-            "description": "token obtido no login",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
+            "bearerAuth": []
           }
         ],
         "requestBody": {
@@ -317,23 +289,7 @@
             }
           },
           "401": {
-            "description": "Quando o token é inválido, está expirado ou não é informado",
-            "content": {
-              "application/json": {
-                "examples": {
-                  "Token não informado": {
-                    "value": {
-                      "message": "Token not found"
-                    }
-                  },
-                  "Token inválido ou expirado": {
-                    "value": {
-                      "message": "Invalid token"
-                    }
-                  }
-                }
-              }
-            }
+            "$ref": "#/components/responses/UnauthorizedError"
           },
           "422": {
             "description": "Retorna mensagem de erro ao tentar cadastrar partida com time que não existe",
@@ -368,8 +324,8 @@
             "schema": {
               "type": "string",
               "enum": [
-                true,
-                false
+                "true",
+                "false"
               ]
             }
           }
@@ -752,6 +708,13 @@
     }
   },
   "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
     "schemas": {
       "Login": {
         "required": [
@@ -876,6 +839,27 @@
             "efficiency": 80
           }
         ]
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Quando o token é inválido, está expirado ou não é informado",
+        "content": {
+          "application/json": {
+            "examples": {
+              "Token não informado": {
+                "value": {
+                  "message": "Token not found"
+                }
+              },
+              "Token inválido ou expirado": {
+                "value": {
+                  "message": "Invalid token"
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
