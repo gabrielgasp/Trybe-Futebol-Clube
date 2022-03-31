@@ -1,3 +1,3 @@
-export * from './Credentials';
-export * from './TokenData';
-export * from './User';
+export * from './Credentials.interface';
+export * from './TokenData.interface';
+export * from './User.interface';

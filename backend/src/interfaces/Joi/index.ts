@@ -1,1 +1,1 @@
-export * from './JoiSchemas';
+export * from './JoiSchemas.interface';

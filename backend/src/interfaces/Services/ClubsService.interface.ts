@@ -1,4 +1,4 @@
-import { IClub } from '../Club/Club';
+import { IClub } from '../Club/Club.interface';
 
 export interface IClubsService {
   getAllClubs(): Promise<{
