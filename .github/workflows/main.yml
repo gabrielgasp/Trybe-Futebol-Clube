@@ -30,7 +30,6 @@ jobs:
 
     - name: Start containers
       run: docker-compose up --build -d
-      working-directory: ./deploy
 
     - name: Install dependencies
       run: npm install
@@ -42,4 +41,3 @@ jobs:
 
     - name: Stop containers
       run: docker-compose down
-      working-directory: ./deploy
