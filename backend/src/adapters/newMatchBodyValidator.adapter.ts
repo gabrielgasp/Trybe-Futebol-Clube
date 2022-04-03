@@ -1,5 +1,6 @@
 import Joi, { CustomHelpers } from 'joi';
-import { INewMatch } from '../../typescript/interfaces';
+import { TBodyValidator } from '../typescript/types';
+import { INewMatch } from '../typescript/interfaces';
 
 const checkSameTeam = (value: INewMatch, helpers: CustomHelpers) => {
   const { homeTeam, awayTeam } = value;
@@ -11,7 +12,7 @@ const checkSameTeam = (value: INewMatch, helpers: CustomHelpers) => {
   return value;
 };
 
-export const newMatch = Joi.object({
+const newMatch = Joi.object({
   homeTeam: Joi.number().positive().required().messages({
     'number.base': '422|Home Team must be a positive integer',
     'number.positive': '422|Home Team must be a positive integer',
@@ -39,3 +40,11 @@ export const newMatch = Joi.object({
     'any.only': '422|In Progress must be provided as true',
   }),
 }).custom(checkSameTeam);
+
+export const newMatchBodyValidator: TBodyValidator = (body: unknown) => {
+  const { error } = newMatch.validate(body);
+  if (error) {
+    const [code, message] = error.message.split('|');
+    return { code: Number(code), message };
+  }
+};

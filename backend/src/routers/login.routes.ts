@@ -1,11 +1,12 @@
 import { Router, Request, Response } from 'express';
-import { ILoginService, IJoiSchemas, IMiddlewares } from '../typescript/interfaces';
+import { TBodyValidator } from '../typescript/types';
+import { ILoginService, IMiddlewares } from '../typescript/interfaces';
 
 export class LoginRouter {
   constructor(
     public router: Router,
     private loginService: ILoginService,
-    private joiSchemas: IJoiSchemas,
+    private loginBodyValidator: TBodyValidator,
     private middlewares: IMiddlewares,
   ) {
     this.login();
@@ -15,7 +16,7 @@ export class LoginRouter {
   private login(): void {
     this.router.post(
       '/',
-      this.middlewares.validateBody(this.joiSchemas.login),
+      this.middlewares.validateBody(this.loginBodyValidator),
       async (req: Request, res: Response) => {
         const { code, data } = await this.loginService.login(req.body);
         return res.status(code).json(data);
