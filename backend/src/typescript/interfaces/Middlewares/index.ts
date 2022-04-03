@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { ObjectSchema } from 'joi';
+import { TBodyValidator } from '../../types';
 
 type ErrorHandler = (
   error: unknown,
@@ -20,11 +20,11 @@ type ParseInProgressQuery = (
   next: NextFunction
 ) => Promise<void>;
 
-type ValidateBody = (schema: ObjectSchema) => (
+type ValidateBody = (bodyValidator: TBodyValidator) => (
   req: Request,
   res: Response,
   next: NextFunction
-) => Response<any, Record<string, any>> | undefined;
+) => Response<any, Record<string, any>> | void;
 
 export interface IMiddlewares {
   errorHandler: ErrorHandler;

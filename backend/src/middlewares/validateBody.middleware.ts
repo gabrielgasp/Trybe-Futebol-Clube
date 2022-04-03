@@ -1,15 +1,14 @@
 import { NextFunction, Request, Response } from 'express';
-import { ObjectSchema } from 'joi';
+import { TBodyValidator } from '../typescript/types';
 
-export const validateBody = (schema: ObjectSchema) => (
+export const validateBody = (bodyValidator: TBodyValidator) => (
   (req: Request, res: Response, next: NextFunction) => {
-    const { error } = schema.validate(req.body);
+    const error = bodyValidator(req.body);
 
     if (error) {
-      const [code, message] = error.message.split('|');
-      return res.status(Number(code)).json({ message });
+      return res.status(error.code).json({ message: error.message });
     }
 
-    next();
+    return next();
   }
 );

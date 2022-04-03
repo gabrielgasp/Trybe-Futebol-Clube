@@ -1,11 +1,12 @@
 import { Request, Response, Router } from 'express';
-import { IMatchesService, IJoiSchemas, IMiddlewares } from '../typescript/interfaces';
+import { TBodyValidator } from '../typescript/types';
+import { IMatchesService, IMiddlewares } from '../typescript/interfaces';
 
 export class MatchesRouter {
   constructor(
     public router: Router,
     private matchesService: IMatchesService,
-    private joiSchemas: IJoiSchemas,
+    private newMatchBodyValidator: TBodyValidator,
     private middlewares: IMiddlewares,
   ) {
     this.getAllMatches();
@@ -42,7 +43,7 @@ export class MatchesRouter {
     this.router.post(
       '/',
       this.middlewares.jwtAuth,
-      this.middlewares.validateBody(this.joiSchemas.newMatch),
+      this.middlewares.validateBody(this.newMatchBodyValidator),
       async (req: Request, res: Response) => {
         const { code, data } = await this.matchesService.saveMatch(req.body);
 
