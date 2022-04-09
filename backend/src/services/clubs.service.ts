@@ -7,14 +7,10 @@ export class ClubsService implements IClubsService {
   ) {}
 
   async getAllClubs() {
-    const clubsList = await this.clubsRepository.getAllClubs();
-
-    return { code: 200, data: clubsList };
+    return this.clubsRepository.getAllClubs();
   }
 
   async getClubById(id: string) {
-    const club = await this.clubsRepository.getClubById(id);
-
-    return club ? { code: 200, data: club } : { code: 404, data: { message: 'Club not found' } };
+    return this.clubsRepository.getClubById(id);
   }
 }
