@@ -1,6 +1,7 @@
+import { IClubsService } from '../typescript/interfaces';
 import { ClubsRepository } from '../repositories';
 
-export class ClubsService {
+export class ClubsService implements IClubsService {
   constructor(
     private clubsRepository: ClubsRepository,
   ) {}
