@@ -23,7 +23,7 @@ export class LeaderboardService implements ILeaderboardService {
 
     const homeLeaderboard = this.sortLeaderboard(unsortedHomeLeaderboard);
 
-    return { code: 200, data: homeLeaderboard };
+    return homeLeaderboard;
   }
 
   async getAwayRanking() {
@@ -34,7 +34,7 @@ export class LeaderboardService implements ILeaderboardService {
 
     const awayLeaderboard = this.sortLeaderboard(unsortedAwayLeaderboard);
 
-    return { code: 200, data: awayLeaderboard };
+    return awayLeaderboard;
   }
 
   async getOverallRanking() {
@@ -45,6 +45,6 @@ export class LeaderboardService implements ILeaderboardService {
 
     const overallLeaderboard = this.sortLeaderboard(unsortedOverallLeaderboard);
 
-    return { code: 200, data: overallLeaderboard };
+    return overallLeaderboard;
   }
 }

@@ -15,8 +15,8 @@ export class LeaderboardRouter {
     this.router.get(
       '/home',
       async (_req: Request, res: Response) => {
-        const { code, data } = await this.leaderboardService.getHomeRanking();
-        return res.status(code).json(data);
+        const homeLeaderboard = await this.leaderboardService.getHomeRanking();
+        return res.status(200).json(homeLeaderboard);
       },
     );
   }
@@ -25,8 +25,8 @@ export class LeaderboardRouter {
     this.router.get(
       '/away',
       async (_req: Request, res: Response) => {
-        const { code, data } = await this.leaderboardService.getAwayRanking();
-        return res.status(code).json(data);
+        const awayLeaderboard = await this.leaderboardService.getAwayRanking();
+        return res.status(200).json(awayLeaderboard);
       },
     );
   }
@@ -35,8 +35,8 @@ export class LeaderboardRouter {
     this.router.get(
       '/',
       async (_req: Request, res: Response) => {
-        const { code, data } = await this.leaderboardService.getOverallRanking();
-        return res.status(code).json(data);
+        const overallLeaderboard = await this.leaderboardService.getOverallRanking();
+        return res.status(200).json(overallLeaderboard);
       },
     );
   }
