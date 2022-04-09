@@ -16,7 +16,7 @@ describe('Matches endpoints', () => {
   let loginToken: string;
 
   before(async () => {
-    exec('npm run db:reset');
+    exec('npm run db:reset', { silent: true });
 
     chaiHttpResponse = await chai
         .request(app)

@@ -14,8 +14,8 @@ export class ClubsRouter {
     this.router.get(
       '/',
       async (req: Request, res: Response) => {
-        const { code, data } = await this.clubsService.getAllClubs();
-        return res.status(code).json(data);
+        const clubs = await this.clubsService.getAllClubs();
+        return res.status(200).json(clubs);
       },
     );
   }
@@ -24,8 +24,9 @@ export class ClubsRouter {
     this.router.get(
       '/:id',
       async (req: Request, res: Response) => {
-        const { code, data } = await this.clubsService.getClubById(req.params.id);
-        return res.status(code).json(data);
+        const club = await this.clubsService.getClubById(req.params.id);
+        return club ? res.status(200).json(club)
+          : res.status(404).json({ message: 'Club not found' });
       },
     );
   }

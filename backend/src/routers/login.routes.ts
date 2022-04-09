@@ -18,8 +18,9 @@ export class LoginRouter {
       '/',
       this.middlewares.validateBody(this.loginBodyValidator),
       async (req: Request, res: Response) => {
-        const { code, data } = await this.loginService.login(req.body);
-        return res.status(code).json(data);
+        const response = await this.loginService.login(req.body);
+        return response ? res.status(200).json(response)
+          : res.status(401).json({ message: 'Incorrect email or password' });
       },
     );
   }

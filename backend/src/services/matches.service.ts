@@ -23,13 +23,11 @@ export class MatchesService implements IMatchesService {
         : await this.matchesRepository.getAllFinishedMatches();
     }
 
-    return { code: 200, data: matchList };
+    return matchList;
   }
 
   async getMatchById(id: string) {
-    const match = await this.matchesRepository.getMatchById(id);
-
-    return match ? { code: 200, data: match } : { code: 404, data: { message: 'Match not found' } };
+    return this.matchesRepository.getMatchById(id);
   }
 
   async saveMatch(data: INewMatch) {
@@ -39,25 +37,19 @@ export class MatchesService implements IMatchesService {
     ]);
 
     if (teams.includes(undefined)) {
-      return { code: 422, data: { message: 'There is no team with such id!' } };
+      return null;
     }
 
     const newMatch = await this.matchesRepository.saveMatch(data);
 
-    return { code: 201, data: newMatch };
+    return newMatch;
   }
 
   async finishMatch(id: string) {
-    const status = await this.matchesRepository.finishMatch(id);
-
-    return status ? { code: 200, data: { message: 'Finished match' } }
-      : { code: 422, data: { message: 'Match already over or does not exist' } };
+    return this.matchesRepository.finishMatch(id);
   }
 
   async updateScore(id: string, newScore: IScore) {
-    const status = await this.matchesRepository.updateScore(id, newScore);
-
-    return status ? { code: 200, data: { message: 'Match score updated' } }
-      : { code: 422, data: { message: 'Match already over or does not exist' } };
+    return this.matchesRepository.updateScore(id, newScore);
   }
 }

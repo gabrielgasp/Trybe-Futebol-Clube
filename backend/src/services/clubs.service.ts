@@ -1,19 +1,16 @@
+import { IClubsService } from '../typescript/interfaces';
 import { ClubsRepository } from '../repositories';
 
-export class ClubsService {
+export class ClubsService implements IClubsService {
   constructor(
     private clubsRepository: ClubsRepository,
   ) {}
 
   async getAllClubs() {
-    const clubsList = await this.clubsRepository.getAllClubs();
-
-    return { code: 200, data: clubsList };
+    return this.clubsRepository.getAllClubs();
   }
 
   async getClubById(id: string) {
-    const club = await this.clubsRepository.getClubById(id);
-
-    return club ? { code: 200, data: club } : { code: 404, data: { message: 'Club not found' } };
+    return this.clubsRepository.getClubById(id);
   }
 }
