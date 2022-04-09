@@ -1,7 +1,6 @@
 import sinon from 'sinon';
 import chai from 'chai';
 import jwt from 'jsonwebtoken';
-import { exec } from 'shelljs';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
