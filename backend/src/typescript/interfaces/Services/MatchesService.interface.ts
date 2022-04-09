@@ -1,42 +1,13 @@
 import { IMatch, INewMatch, INewMatchResponse, IScore } from '../Match';
 
 export interface IMatchesService {
-  getAllMatches(inProgress: boolean | undefined): Promise<{
-    code: number,
-    data: IMatch[]
-  }>;
+  getAllMatches(inProgress: boolean | undefined): Promise<IMatch[]>;
 
-  getMatchById(id: string): Promise<{
-    code: number;
-    data: IMatch;
-  } | {
-    code: number;
-    data: {
-      message: string;
-    };
-  }>;
+  getMatchById(id: string): Promise<IMatch>;
 
-  saveMatch(data: INewMatch): Promise<{
-    code: number;
-    data: {
-      message: string;
-    };
-  } | {
-    code: number;
-    data: INewMatchResponse;
-  }>;
+  saveMatch(data: INewMatch): Promise<INewMatchResponse | null>;
 
-  finishMatch(id: string): Promise<{
-    code: number;
-    data: {
-      message: string;
-    };
-  }>
+  finishMatch(id: string): Promise<number>
 
-  updateScore(id: string, newScore: IScore): Promise<{
-    code: number;
-    data: {
-      message: string;
-    };
-  }>
+  updateScore(id: string, newScore: IScore): Promise<number>
 }

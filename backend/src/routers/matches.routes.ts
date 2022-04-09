@@ -21,9 +21,9 @@ export class MatchesRouter {
       '/',
       this.middlewares.parseInProgressQuery,
       async (req: Request, res: Response) => {
-        const { code, data } = await this.matchesService.getAllMatches(req.body.inProgress);
+        const matchList = await this.matchesService.getAllMatches(req.body.inProgress);
 
-        return res.status(code).json(data);
+        return res.status(200).json(matchList);
       },
     );
   }
@@ -32,9 +32,10 @@ export class MatchesRouter {
     this.router.get(
       '/:id',
       async (req: Request, res: Response) => {
-        const { code, data } = await this.matchesService.getMatchById(req.params.id);
+        const match = await this.matchesService.getMatchById(req.params.id);
 
-        return res.status(code).json(data);
+        return match ? res.status(200).json(match)
+          : res.status(404).json({ message: 'Match not found' });
       },
     );
   }
@@ -45,9 +46,10 @@ export class MatchesRouter {
       this.middlewares.jwtAuth,
       this.middlewares.validateBody(this.newMatchBodyValidator),
       async (req: Request, res: Response) => {
-        const { code, data } = await this.matchesService.saveMatch(req.body);
+        const response = await this.matchesService.saveMatch(req.body);
 
-        return res.status(code).json(data);
+        return response ? res.status(201).json(response)
+          : res.status(422).json({ message: 'There is no team with such id!' });
       },
     );
   }
@@ -56,9 +58,10 @@ export class MatchesRouter {
     this.router.patch(
       '/:id/finish',
       async (req: Request, res: Response) => {
-        const { code, data } = await this.matchesService.finishMatch(req.params.id);
+        const response = await this.matchesService.finishMatch(req.params.id);
 
-        return res.status(code).json(data);
+        return response ? res.status(200).json({ message: 'Finished match' })
+          : res.status(422).json({ message: 'Match already over or does not exist' });
       },
     );
   }
@@ -67,9 +70,10 @@ export class MatchesRouter {
     this.router.patch(
       '/:id',
       async (req: Request, res: Response) => {
-        const { code, data } = await this.matchesService.updateScore(req.params.id, req.body);
+        const response = await this.matchesService.updateScore(req.params.id, req.body);
 
-        return res.status(code).json(data);
+        return response ? res.status(200).json({ message: 'Match score updated' })
+          : res.status(422).json({ message: 'Match already over or does not exist' });
       },
     );
   }
