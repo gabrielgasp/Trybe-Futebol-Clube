@@ -97,7 +97,7 @@ Para rodar a bateria de testes basta executar
 Para encerrar a API basta executar o comando
 
 ```bash
-  docker-compose down --rmi all --volumes --remove-orphans
+  docker-compose down --rmi local --volumes --remove-orphans
 ```
 
 ## Experiência
