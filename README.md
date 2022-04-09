@@ -73,7 +73,7 @@ Suba a orquestração de containers
   docker-compose up --build -d
 ```
 
-A API estará pronta para uso quando a saída no seu terminal ficar assim (pode levar até 1 minuto)
+A API estará pronta para uso quando a saída no seu terminal ficar assim
 
 ```bash
   Creating tfc_database ... done
@@ -81,14 +81,14 @@ A API estará pronta para uso quando a saída no seu terminal ficar assim (pode 
   Creating tfc_frontend ... done
 ```
 
-A aplicação poderá ser acessada através de:
+A aplicação poderá ser acessada através de
 
 ```bash
   Front-end: localhost:3000
   Back-end: localhost:3001
 ```
 
-Para rodar a bateria de testes basta executar:
+Para rodar a bateria de testes basta executar
 
 ```bash
   docker-compose exec backend npm test
