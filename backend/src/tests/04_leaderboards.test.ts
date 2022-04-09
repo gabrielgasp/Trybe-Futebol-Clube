@@ -27,7 +27,7 @@ describe('Leaderboard endpoints', () => {
   
   describe('When making GET request to /leaderboard/home', () => {
     before(() => {
-      exec('npm run db:reset');
+      exec('npm run db:reset', { silent: true });
     });
 
     it('API responds with status 200 and ordered ranking of clubs', async () => {
@@ -65,7 +65,7 @@ describe('Leaderboard endpoints', () => {
 
   describe('When making GET request to /leaderboard/away', () => {
     before(() => {
-      exec('npm run db:reset');
+      exec('npm run db:reset', { silent: true });
     });
 
     it('API responds with status 200 and ordered ranking of clubs', async () => {
@@ -103,7 +103,7 @@ describe('Leaderboard endpoints', () => {
 
   describe('When making GET request to /leaderboard', () => {
     before(() => {
-      exec('npm run db:reset');
+      exec('npm run db:reset', { silent: true });
     });
 
     it('API responds with status 200 and ordered ranking of clubs', async () => {

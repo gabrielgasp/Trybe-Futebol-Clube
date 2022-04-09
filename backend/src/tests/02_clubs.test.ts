@@ -15,7 +15,7 @@ describe('Clubs endpoints', () => {
   let chaiHttpResponse: Response;
 
   before(() => {
-    exec('npm run db:reset');
+    exec('npm run db:reset', { silent: true });
   });
 
   describe('When making GET request to /clubs', () => {

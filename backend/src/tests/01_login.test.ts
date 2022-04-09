@@ -15,7 +15,7 @@ describe('Login endpoints', () => {
   let loginToken: string;
 
   before(() => {
-    exec('npm run db:reset');
+    exec('npm run db:reset', { silent: true });
   });
 
   describe('When login is successful', () => {
