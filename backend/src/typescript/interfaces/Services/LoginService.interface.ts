@@ -1,23 +1,15 @@
 import { ICredentials } from '../User/Credentials.interface';
 
 interface ILoginResponse {
-  code: number;
-  data: {
-    message: string;
-    user?: undefined;
-    token?: undefined;
-  } | {
-    user: {
-      id: number;
-      email: string;
-      role: string;
-      username: string;
-    };
-    token: string;
-    message?: undefined;
+  user: {
+    id: number;
+    email: string;
+    role: string;
+    username: string;
   };
+  token: string;
 }
 
 export interface ILoginService {
-  login(credentials: ICredentials): Promise<ILoginResponse>
+  login(credentials: ICredentials): Promise<ILoginResponse | null>
 }
