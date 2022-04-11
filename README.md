@@ -53,6 +53,8 @@ Ps2: Para realizar o login na aplicação basta usar as seguintes credenciais:
 ***Para rodar a API localmente certifique-se de ter [Docker](https://docs.docker.com/get-docker/) 
 e [Docker-Compose](https://docs.docker.com/compose/install/) instalados em sua maquina.***
 
+Obs: Docker e Docker-Compose utilizados no desenvolvimento e execução deste projeto estavam nas versões `20.10.13` e `1.29.2` respectivamente.
+
 Clone o projeto
 
 ```bash
@@ -68,10 +70,10 @@ Entre no diretório do projeto
 Suba a orquestração de containers
 
 ```bash
-  docker-compose up -d
+  docker-compose up --build -d
 ```
 
-A API estará pronta para uso quando a saída no seu terminal ficar assim (pode levar até 1 minuto)
+A API estará pronta para uso quando a saída no seu terminal ficar assim
 
 ```bash
   Creating tfc_database ... done
@@ -79,23 +81,23 @@ A API estará pronta para uso quando a saída no seu terminal ficar assim (pode 
   Creating tfc_frontend ... done
 ```
 
-A aplicação poderá ser acessada através de:
+A aplicação poderá ser acessada através de
 
 ```bash
   Front-end: localhost:3000
   Back-end: localhost:3001
 ```
 
-Para rodar a bateria de testes basta executar:
+Para rodar a bateria de testes basta executar
 
 ```bash
-  cd backend && npm install && npm test 
+  docker-compose exec backend npm test
 ```
 
 Para encerrar a API basta executar o comando
 
 ```bash
-  docker-compose down
+  docker-compose down --rmi local --volumes --remove-orphans
 ```
 
 ## Experiência
