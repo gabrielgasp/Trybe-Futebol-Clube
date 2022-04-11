@@ -1,6 +1,6 @@
 import chai from 'chai';
 import { exec } from 'shelljs';
-import chaiHttp = require('chai-http');
+import chaiHttp from 'chai-http';
 
 import { app } from '../app';
 
