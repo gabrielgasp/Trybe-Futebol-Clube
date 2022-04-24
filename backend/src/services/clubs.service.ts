@@ -1,9 +1,8 @@
-import { IClubsService } from '../typescript/interfaces';
-import { ClubsRepository } from '../repositories';
+import { IClubsService, IClubsRepository } from '../typescript/interfaces';
 
 export class ClubsService implements IClubsService {
   constructor(
-    private clubsRepository: ClubsRepository,
+    private clubsRepository: IClubsRepository,
   ) {}
 
   async getAllClubs() {
