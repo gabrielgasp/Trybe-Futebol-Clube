@@ -4,11 +4,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN pwd
-
-RUN ls
-
-RUN npm install
+RUN npm install --silent
 
 COPY . .
 
