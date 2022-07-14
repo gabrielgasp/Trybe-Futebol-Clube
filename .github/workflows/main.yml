@@ -1,10 +1,10 @@
 on:
   push:
     branches:
-      - aws
+      - master
   pull_request:
     branches:
-      - aws
+      - master
 
 jobs:
   ESLint:
@@ -62,11 +62,11 @@ jobs:
         with:
           context: "{{defaultContext}}:backend"
           push: true
-          tags: gabrielgaspar447/tfc_backend:aws
+          tags: gabrielgaspar447/tfc_backend:local
 
       - name: Build and push frontend
         uses: docker/build-push-action@v3
         with:
           context: "{{defaultContext}}:frontend"
           push: true
-          tags: gabrielgaspar447/tfc_frontend:aws
+          tags: gabrielgaspar447/tfc_frontend:local
