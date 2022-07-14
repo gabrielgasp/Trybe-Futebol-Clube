@@ -54,13 +54,13 @@ jobs:
       - name: Build and push backend
         uses: docker/build-push-action@v3
         with:
-          context: backend
+          file: ./backend/Dockerfile
           push: true
           tags: gabrielgaspar447/tfc_backend:latest
 
       - name: Build and push frontend
         uses: docker/build-push-action@v3
         with:
-          context: frontend
+          file: ./frontend/Dockerfile
           push: true
           tags: gabrielgaspar447/tfc_frontend:latest
