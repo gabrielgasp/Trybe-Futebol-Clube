@@ -39,27 +39,30 @@ jobs:
     runs-on: ubuntu-latest
     # needs: [Tests]
     steps:
-    - name: Fetch repository
-      uses: actions/checkout@v2
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
 
-    - name: Build & push backend
-      uses: mr-smithers-excellent/docker-build-push@v5
-      with:
-        image: gabrielgaspar447/tfc_backend
-        tags: latest
-        registry: docker.io
-        directory: ./backend
-        dockerfile: ./backend/Dockerfile
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    - name: Build & push frontend
-      uses: mr-smithers-excellent/docker-build-push@v5
-      with:
-        image: gabrielgaspar447/tfc_frontend
-        tags: latest
-        registry: docker.io
-        directory: ./frontend
-        dockerfile: ./frontend/Dockerfile
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v3
+        with:
+          file: ./backend/Dockerfile
+          context: ./backend
+          push: true
+          tags: gabrielgaspar447/tfc_backend:latest
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v3
+        with:
+          file: ./frontend/Dockerfile
+          context: ./frontend
+          push: true
+          tags: gabrielgaspar447/tfc_frontend:latest
