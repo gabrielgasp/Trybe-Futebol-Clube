@@ -21,7 +21,7 @@ const Leaderboard = () => {
   return (
     <>
       <Header
-        page="CLASSIFICAÇÃO"
+        page="TESTE"
         FirstNavigationLink={ MatchesBtn }
         SecondNavegationLink={ LoginBtn }
         logged={ logged }

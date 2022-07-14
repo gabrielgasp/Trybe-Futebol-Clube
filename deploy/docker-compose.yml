@@ -2,7 +2,7 @@ version: '3.9'
 services:
 
   frontend:
-    image: tfc_frontend
+    image: gabrielgaspar447/tfc_frontend:aws
     container_name: tfc_frontend
     depends_on:
       backend:
@@ -16,7 +16,7 @@ services:
       - "3000:80"
 
   backend:
-    image: tfc_backend
+    image: gabrielgaspar447/tfc_backend:aws
     container_name: tfc_backend
     depends_on:
       db:
