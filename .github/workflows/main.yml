@@ -70,3 +70,18 @@ jobs:
           context: "{{defaultContext}}:frontend"
           push: true
           tags: gabrielgaspar447/tfc_frontend:aws
+
+  Deploy:
+    runs-on: ubuntu-latest
+    needs: [Docker]
+    steps:
+      - name: SSH Remote Commands
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: ec2-user@ec2-54-233-176-138.sa-east-1.compute.amazonaws.com
+          key: ${{ secrets.AWS_KEY }}
+          script: |
+            docker-compose pull
+            docker-compose up
+
+
