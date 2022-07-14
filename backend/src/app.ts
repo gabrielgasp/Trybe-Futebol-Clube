@@ -3,7 +3,7 @@ import express, { Express } from 'express';
 import 'express-async-errors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocument from './swagger.json';
-import { Factory } from './factory';
+import { loginRouter, clubsRouter, matchesRouter, leaderboardRouter } from './routers';
 import { errorHandler } from './middlewares';
 
 class App {
@@ -30,10 +30,10 @@ class App {
 
   private routes(): void {
     this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-    this.app.use('/login', Factory.createLogin().router);
-    this.app.use('/clubs', Factory.createClubs().router);
-    this.app.use('/matches', Factory.createMatches().router);
-    this.app.use('/leaderboard', Factory.createLeaderboard().router);
+    this.app.use('/login', loginRouter);
+    this.app.use('/clubs', clubsRouter);
+    this.app.use('/matches', matchesRouter);
+    this.app.use('/leaderboard', leaderboardRouter);
   }
 
   private errorHandler(): void {
