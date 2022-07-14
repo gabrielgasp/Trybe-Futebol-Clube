@@ -48,7 +48,7 @@ jobs:
         image: gabrielgaspar447/tfc_backend
         tags: latest
         registry: docker.io
-        dockerfile: ./backend/Dockerfile
+        directory: backend
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
@@ -58,6 +58,6 @@ jobs:
         image: gabrielgaspar447/tfc_frontend
         tags: latest
         registry: docker.io
-        dockerfile: ./frontend/Dockerfile
+        directory: frontend
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
