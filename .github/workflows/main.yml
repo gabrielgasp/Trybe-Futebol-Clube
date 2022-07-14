@@ -46,8 +46,9 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: gabrielgaspar447/tfc_backend
+        tags: latest
         registry: docker.io
-        directory: backend
+        directory: ./backend
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
@@ -55,7 +56,8 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: gabrielgaspar447/tfc_frontend
+        tags: latest
         registry: docker.io
-        directory: frontend
+        directory: ./frontend
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
