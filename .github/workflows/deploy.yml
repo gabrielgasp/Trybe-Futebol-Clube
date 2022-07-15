@@ -5,6 +5,7 @@ on:
 
 jobs:
   Docker:
+    name: "Docker image build and push to dockerhub"
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
@@ -34,6 +35,7 @@ jobs:
           tags: gabrielgaspar447/tfc_frontend:aws
 
   Deploy:
+    name: "Deploy to AWS EC2"
     runs-on: ubuntu-latest
     needs: [Docker]
     steps:
