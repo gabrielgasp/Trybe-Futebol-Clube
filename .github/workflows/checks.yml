@@ -5,6 +5,7 @@ on:
 
 jobs:
   ESLint:
+    name: "ESLint check"
     runs-on: ubuntu-latest
     steps:
     - name: Fetch repository
@@ -22,6 +23,7 @@ jobs:
       working-directory: ./backend
 
   Tests:
+    name: "Tests"
     runs-on: ubuntu-latest
     needs: [ESLint]
     steps:
