@@ -40,8 +40,8 @@ jobs:
       - name: SSH Remote Commands
         uses: appleboy/ssh-action@v0.1.4
         with:
-          host: ec2-54-233-176-138.sa-east-1.compute.amazonaws.com
-          username: ec2-user
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USER }}
           key: ${{ secrets.AWS_KEY }}
           script: |
             docker-compose pull
