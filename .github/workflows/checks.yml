@@ -1,7 +1,4 @@
-on:
-  pull_request:
-    branches:
-      - "aws"
+on: pull_request
 
 jobs:
   ESLint:
