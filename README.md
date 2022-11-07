@@ -1,6 +1,6 @@
 # Trybe Futebol Club
 
-Esta aplicação foi um dos projetos avaliativos do módulo de backend no curso de desenvolvimento web na Trybe. Nele recebi um frontend react pronto que exibe informações sobre partidas e classificações de futebol.
+Esta aplicação foi um dos projetos avaliativos do módulo de backend no curso de desenvolvimento web na Trybe. Nele recebi um frontend react que exibe informações sobre partidas e classificações de futebol.
 
 "E de onde essas informações virão?", você deve estar se perguntando. Vem tudo do Backend!
 
@@ -18,17 +18,6 @@ Exatamente, minha missão nesse projeto foi, a partir de um frontend sem lógica
 
 Achou que era só isso? Sabe de nada, inocente! Já dizia o ditado, "aplicação sem testes é aplicação sem futuro", e por isso desenvolvi em TDD uma cobertura de testes de 100% em todas as camadas utilizando Mocha, Chai e Sinon.
 
-A aplicação pode ser acessada [aqui](http://ec2-54-233-176-138.sa-east-1.compute.amazonaws.com:3000/leaderboard).
-
-A API pode ser acessada pela porta `3001`, e a documentação com todos os endpoints pode ser acessada pela rota [`/docs`](http://ec2-54-233-176-138.sa-east-1.compute.amazonaws.com:3001/docs/)
-
-Ps: Caso seu navegador tente acessar a página através do protocolo HTTPS e acuse erro, será necessário alterar manualmente a URL para o protocolo HTTP.
-
-Ps2: Para realizar o login na aplicação basta usar as seguintes credenciais:
-
-    login: admin@admin.com
-    senha: secret_admin 
-
 ## Stacks utilizadas
 
 - Node.js
@@ -39,7 +28,6 @@ Ps2: Para realizar o login na aplicação basta usar as seguintes credenciais:
 - Sequelize
 - Docker
 - Mocha + Chai + Sinon
-- AWS
 - Swagger
 
 #### Além das Stacks citadas acima, também foram utilizadas as seguintes bibliotecas:
@@ -55,25 +43,25 @@ e [Docker-Compose](https://docs.docker.com/compose/install/) instalados em sua m
 
 Obs: Docker e Docker-Compose utilizados no desenvolvimento e execução deste projeto estavam nas versões `20.10.13` e `1.29.2` respectivamente.
 
-Clone o projeto
+Clone o projeto:
 
 ```bash
   git clone git@github.com:GabrielGaspar447/Trybe-Futebol-Clube.git
 ```
 
-Entre no diretório do projeto
+Entre no diretório do projeto:
 
 ```bash
   cd Trybe-Futebol-Clube
 ```
 
-Suba a orquestração de containers
+Suba a orquestração de containers:
 
 ```bash
   docker-compose up --build -d
 ```
 
-A API estará pronta para uso quando a saída no seu terminal ficar assim
+A API estará pronta para uso quando a saída no seu terminal ficar assim:
 
 ```bash
   Creating tfc_database ... done
@@ -81,20 +69,27 @@ A API estará pronta para uso quando a saída no seu terminal ficar assim
   Creating tfc_frontend ... done
 ```
 
-A aplicação poderá ser acessada através de
+A aplicação poderá ser acessada através de:
 
 ```bash
   Front-end: localhost:3000
   Back-end: localhost:3001
 ```
 
-Para rodar a bateria de testes basta executar
+Para realizer o login você pode usar as credenciais abaixo:
+
+```bash
+  login: admin@admin.com
+  senha: secret_admin 
+```
+
+Para rodar a bateria de testes basta executar:
 
 ```bash
   docker-compose exec backend npm test
 ```
 
-Para encerrar a API basta executar o comando
+Para encerrar a API basta executar o comando:
 
 ```bash
   docker-compose down --rmi local --volumes --remove-orphans
